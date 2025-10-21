@@ -12,19 +12,19 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const ScanScreen()),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-            textStyle: const TextStyle(fontSize: 18),
+        child: Card(
+          margin: const EdgeInsets.all(20),
+          //Modifikasi menjadi ListTile
+          child: ListTile(
+            leading: const Icon(Icons.camera_alt, color: Colors.blue),
+            title: const Text('Mulai Pindai Teks Baru'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ScanScreen()),
+              );
+            },
           ),
-          child: const Text('Mulai Scan Teks'),
         ),
       ),
     );
