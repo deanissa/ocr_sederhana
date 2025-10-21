@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  google_mlkit_text_recognition: ^0.10.0
+  google_mlkit_text_recognition: ^0.11.0
   camera: ^0.10.5+5
   path_provider: ^2.1.2
   path: ^1.8.3
@@ -93,3 +93,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+dependency_overrides:
+  google_mlkit_commons: ^0.7.0
