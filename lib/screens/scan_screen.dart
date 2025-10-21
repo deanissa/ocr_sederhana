@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 import 'result_screen.dart';
 
 late List<CameraDescription> cameras;
@@ -85,20 +83,40 @@ class _ScanScreenState extends State<ScanScreen> {
       );
     } catch (e) {
       debugPrint('Error saat mengambil foto: $e');
+      //Pesan SnackBar diperbarui sesuai instruksi
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Terjadi kesalahan: $e')),
+        const SnackBar(
+          content: Text(
+            'Pemindaian Gagal! Periksa Izin Kamera atau coba lagi.',
+          ),
+        ),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_controller == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+    // Tampilan loading sebelum kamera siap
+    if (_controller == null || !_controller!.value.isInitialized) {
+      return Scaffold(
+        backgroundColor: Colors.grey[900],
+        body: const Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(color: Colors.yellow),
+              SizedBox(height: 20),
+              Text(
+                'Memuat Kamera... Harap tunggu.',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ],
+          ),
+        ),
       );
     }
 
+    //Tampilan utama jika kamera sudah siap
     return Scaffold(
       appBar: AppBar(title: const Text('Kamera OCR')),
       body: FutureBuilder<void>(
@@ -124,7 +142,9 @@ class _ScanScreenState extends State<ScanScreen> {
               ],
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.yellow),
+            );
           }
         },
       ),
